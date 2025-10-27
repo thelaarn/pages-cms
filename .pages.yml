@@ -1,0 +1,734 @@
+# PagesCMS Configuration for XpertRider
+# Documentation: https://pagescms.org/docs/configuration/
+
+# Media configuration
+media:
+  input: uploads
+  output: /uploads
+  categories: ["image"]
+
+# Reusable components
+components:
+  # SEO fields component
+  seo:
+    label: SEO Overrides
+    type: object
+    fields:
+      - name: title
+        label: "SEO Title"
+        type: string
+        description: "Override the default title for search engines (leave empty to use post title)"
+      - name: description
+        label: "SEO Description"
+        type: string
+        description: "Meta description for search results (150-160 characters recommended)"
+      - name: keywords
+        label: Keywords
+        type: string
+        description: "Comma-separated keywords for SEO"
+      - name: noindex
+        label: "No Index"
+        type: boolean
+        default: false
+        description: "Prevent search engines from indexing this page"
+
+  # Affiliate links component
+  affiliateLinks:
+    label: Affiliate Links
+    type: list
+    description: "Add affiliate product links (RevZilla, Amazon, etc.)"
+    fields:
+      - name: partner
+        label: "Affiliate Partner"
+        type: string
+        required: true
+        description: "Partner name (e.g., revzilla, amazon, cyclegear)"
+      - name: asin
+        label: "Amazon ASIN"
+        type: string
+        description: "Amazon product ASIN (for programmatic links)"
+      - name: url
+        label: "Affiliate URL"
+        type: string
+        description: "Direct affiliate URL (search, short link, or category page)"
+      - name: commissionRate
+        label: "Commission Rate"
+        type: number
+        min: 0
+        max: 100
+        description: "Commission percentage (0-100)"
+      - name: trackingCode
+        label: "Tracking Code"
+        type: string
+        description: "Optional tracking code for analytics"
+      - name: status
+        label: Link Status
+        type: select
+        default: active
+        options:
+          values:
+            - label: Active
+              value: active
+            - label: Unavailable
+              value: unavailable
+            - label: Broken
+              value: broken
+            - label: Unchecked
+              value: unchecked
+
+# Content collections
+content:
+  # Blog posts collection
+  - name: blog
+    label: Blog Posts
+    type: collection
+    path: src/content/blog
+    view:
+      fields: [featuredImage, title, publishDate, category]
+      sort: publishDate:desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: description
+        label: Description
+        type: string
+        required: true
+      - name: publishDate
+        label: Publish Date
+        type: date
+        required: true
+        format: "yyyy-MM-dd"
+      - name: updatedDate
+        label: Updated Date
+        type: date
+        format: "yyyy-MM-dd"
+      - name: author
+        label: Author
+        type: string
+        default: "XpertRider Team"
+      - name: category
+        label: Category
+        type: select
+        required: true
+        options:
+          values:
+            - label: Helmets
+              value: helmets
+            - label: Boots
+              value: boots
+            - label: Gloves
+              value: gloves
+            - label: Jackets
+              value: jackets
+            - label: "Protective Gear"
+              value: protective-gear
+            - label: Accessories
+              value: accessories
+            - label: "Parts & Maintenance"
+              value: parts-maintenance
+            - label: "Safety & Training"
+              value: safety-training
+            - label: General
+              value: general
+      - name: vehicleType
+        label: Vehicle Type
+        type: select
+        default: motorcycles
+        options:
+          values:
+            - label: Motorcycles
+              value: motorcycles
+            - label: ATV/UTVs
+              value: atv-utvs
+            - label: Snowmobiles
+              value: snowmobiles
+            - label: E-Bikes
+              value: ebikes
+            - label: "Jet Skis"
+              value: jet-skis
+            - label: General
+              value: general
+      - name: contentType
+        label: Content Type
+        type: select
+        required: true
+        options:
+          values:
+            - label: Review
+              value: review
+            - label: Guide
+              value: guide
+            - label: Comparison
+              value: comparison
+            - label: News
+              value: news
+            - label: Location
+              value: location
+      - name: tags
+        label: Tags
+        type: list
+        field:
+          type: string
+      - name: featuredImage
+        label: "Featured Image"
+        type: image
+      - name: draft
+        label: Draft
+        type: boolean
+        default: false
+      - component: affiliateLinks
+      - component: seo
+      - name: body
+        label: Body
+        type: rich-text
+
+  # Reviews collection
+  - name: reviews
+    label: Product Reviews
+    type: collection
+    path: src/content/reviews
+    view:
+      fields: [featuredImage, title, productName, rating]
+      sort: publishDate:desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: description
+        label: Description
+        type: string
+        required: true
+      - name: publishDate
+        label: "Publish Date"
+        type: date
+        required: true
+        format: "yyyy-MM-dd"
+      - name: updatedDate
+        label: "Updated Date"
+        type: date
+        format: "yyyy-MM-dd"
+      - name: author
+        label: Author
+        type: string
+        default: "XpertRider Team"
+      - name: productName
+        label: "Product Name"
+        type: string
+        required: true
+      - name: brand
+        label: Brand
+        type: string
+        required: true
+      - name: rating
+        label: Rating
+        type: number
+        min: 1
+        max: 5
+      - name: price
+        label: Price
+        type: string
+      - name: category
+        label: Category
+        type: select
+        required: true
+        options:
+          values:
+            - label: Helmets
+              value: helmets
+            - label: Boots
+              value: boots
+            - label: Gloves
+              value: gloves
+            - label: Jackets
+              value: jackets
+            - label: "Protective Gear"
+              value: protective-gear
+            - label: Accessories
+              value: accessories
+            - label: "Parts & Maintenance"
+              value: parts-maintenance
+            - label: "Safety & Training"
+              value: safety-training
+            - label: General
+              value: general
+      - name: vehicleType
+        label: Vehicle Type
+        type: select
+        default: motorcycles
+        options:
+          values:
+            - label: Motorcycles
+              value: motorcycles
+            - label: ATV/UTVs
+              value: atv-utvs
+            - label: Snowmobiles
+              value: snowmobiles
+            - label: E-Bikes
+              value: ebikes
+            - label: "Jet Skis"
+              value: jet-skis
+      - name: pros
+        label: Pros
+        type: list
+        field:
+          type: string
+      - name: cons
+        label: Cons
+        type: list
+        field:
+          type: string
+      - name: safetyCertifications
+        label: "Safety Certifications"
+        type: list
+        field:
+          type: string
+      - name: featuredImage
+        label: "Featured Image"
+        type: image
+      - name: tags
+        label: Tags
+        type: list
+        field:
+          type: string
+      - component: affiliateLinks
+      - component: seo
+      - name: body
+        label: Body
+        type: rich-text
+
+  # Guides collection
+  - name: guides
+    label: How-To Guides
+    type: collection
+    path: src/content/guides
+    view:
+      fields: [featuredImage, title, difficulty, timeToRead]
+      sort: publishDate:desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: description
+        label: Description
+        type: string
+        required: true
+      - name: publishDate
+        label: "Publish Date"
+        type: date
+        required: true
+        format: "yyyy-MM-dd"
+      - name: updatedDate
+        label: "Updated Date"
+        type: date
+        format: "yyyy-MM-dd"
+      - name: author
+        label: Author
+        type: string
+        default: "XpertRider Team"
+      - name: difficulty
+        label: Difficulty Level
+        type: select
+        required: true
+        options:
+          values:
+            - label: Beginner
+              value: beginner
+            - label: Intermediate
+              value: intermediate
+            - label: Advanced
+              value: advanced
+      - name: timeToRead
+        label: "Time to Read"
+        type: string
+      - name: category
+        label: Category
+        type: select
+        default: general
+        options:
+          values:
+            - label: Helmets
+              value: helmets
+            - label: Boots
+              value: boots
+            - label: Gloves
+              value: gloves
+            - label: Jackets
+              value: jackets
+            - label: "Protective Gear"
+              value: protective-gear
+            - label: Accessories
+              value: accessories
+            - label: "Parts & Maintenance"
+              value: parts-maintenance
+            - label: "Safety & Training"
+              value: safety-training
+            - label: General
+              value: general
+      - name: vehicleType
+        label: Vehicle Type
+        type: select
+        default: motorcycles
+        options:
+          values:
+            - label: Motorcycles
+              value: motorcycles
+            - label: ATV/UTVs
+              value: atv-utvs
+            - label: Snowmobiles
+              value: snowmobiles
+            - label: E-Bikes
+              value: ebikes
+            - label: "Jet Skis"
+              value: jet-skis
+      - name: featuredImage
+        label: "Featured Image"
+        type: image
+      - name: tags
+        label: Tags
+        type: list
+        field:
+          type: string
+      - component: seo
+      - name: body
+        label: Body
+        type: rich-text
+
+  # Rides collection
+  - name: rides
+    label: Ride Locations
+    type: collection
+    path: src/content/rides
+    view:
+      fields: [featuredImage, title, location, difficulty]
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: description
+        label: Description
+        type: string
+        required: true
+      - name: location
+        label: Location
+        type: string
+        required: true
+      - name: distance
+        label: Distance
+        type: string
+      - name: difficulty
+        label: Difficulty
+        type: select
+        required: true
+        options:
+          values:
+            - label: Easy
+              value: easy
+            - label: Moderate
+              value: moderate
+            - label: Challenging
+              value: challenging
+      - name: bestTime
+        label: "Best Time to Ride"
+        type: string
+      - name: highlights
+        label: Highlights
+        type: list
+        field:
+          type: string
+      - name: mapUrl
+        label: "Map URL"
+        type: string
+      - name: featuredImage
+        label: "Featured Image"
+        type: image
+      - component: seo
+      - name: body
+        label: Body
+        type: rich-text
+
+  # Locations collection (SEO pages)
+  - name: locations
+    label: Location Pages
+    type: collection
+    path: src/content/locations
+    format: mdx
+    extension: mdx
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: city
+        label: City
+        type: string
+        required: true
+      - name: state
+        label: State
+        type: string
+        required: true
+      - name: stateCode
+        label: State Code
+        type: string
+        required: true
+        description: "2-letter state code (e.g., CA, TX)"
+      - name: population
+        label: Population
+        type: number
+        description: "City population"
+      - name: climate
+        label: "Climate Description"
+        type: string
+        required: true
+      - name: vehicleType
+        label: Vehicle Type
+        type: select
+        required: true
+        options:
+          values:
+            - label: Motorcycles
+              value: motorcycles
+            - label: E-Bikes
+              value: ebikes
+            - label: Jet Skis
+              value: jet-skis
+            - label: ATV/UTV
+              value: atv-utv
+            - label: Snowmobiles
+              value: snowmobiles
+      - name: localDealers
+        label: Local Dealers
+        type: list
+        description: "Local dealerships and shops"
+        fields:
+          - name: name
+            label: "Dealer Name"
+            type: string
+          - name: address
+            label: Address
+            type: string
+          - name: phone
+            label: Phone
+            type: string
+          - name: website
+            label: Website
+            type: string
+          - name: rating
+            label: Rating
+            type: number
+            min: 1
+            max: 5
+      - name: weatherConsiderations
+        label: "Weather Considerations"
+        type: list
+        required: true
+        field:
+          type: string
+      - name: popularRoutes
+        label: "Popular Routes"
+        type: list
+        field:
+          type: string
+      - component: seo
+
+  # Brands collection
+  - name: brands
+    label: Brand Pages
+    type: collection
+    path: src/content/brands
+    format: mdx
+    extension: mdx
+    fields:
+      - name: name
+        label: "Brand Name"
+        type: string
+        required: true
+      - name: slug
+        label: "URL Slug"
+        type: string
+        required: true
+      - name: logo
+        label: "Brand Logo"
+        type: image
+      - name: description
+        label: Description
+        type: string
+        required: true
+      - name: founded
+        label: "Founded Year"
+        type: number
+        description: "Year the brand was founded"
+      - name: headquarters
+        label: Headquarters
+        type: string
+        description: "City, Country"
+      - name: specialties
+        label: Specialties
+        type: list
+        required: true
+        field:
+          type: string
+      - name: priceRange
+        label: Price Range
+        type: select
+        required: true
+        options:
+          values:
+            - label: Budget
+              value: budget
+            - label: Mid-Range
+              value: mid-range
+            - label: Premium
+              value: premium
+            - label: Luxury
+              value: luxury
+      - name: categories
+        label: "Product Categories"
+        type: list
+        required: true
+        field:
+          type: string
+      - name: vehicleTypes
+        label: Vehicle Types
+        type: list
+        required: true
+        description: "What vehicles does this brand cater to?"
+        field:
+          type: select
+          options:
+            values:
+              - label: Motorcycles
+                value: motorcycles
+              - label: E-Bikes
+                value: ebikes
+              - label: Jet Skis
+                value: jet-skis
+              - label: ATV/UTV
+                value: atv-utv
+              - label: Snowmobiles
+                value: snowmobiles
+      - name: affiliatePartner
+        label: "Affiliate Partner"
+        type: boolean
+        default: false
+        description: "Is this brand an affiliate partner?"
+      - name: affiliateCommission
+        label: "Affiliate Commission"
+        type: number
+        min: 0
+        max: 100
+        description: "Commission percentage"
+      - name: website
+        label: "Official Website"
+        type: string
+      - component: seo
+
+  # Comparisons collection
+  - name: comparisons
+    label: Product Comparisons
+    type: collection
+    path: src/content/comparisons
+    format: mdx
+    extension: mdx
+    view:
+      fields: [featuredImage, title, category]
+      sort: publishDate:desc
+    fields:
+      - name: title
+        label: Title
+        type: string
+        required: true
+      - name: description
+        label: Description
+        type: string
+        required: true
+      - name: publishDate
+        label: "Publish Date"
+        type: date
+        required: true
+        format: "yyyy-MM-dd"
+      - name: updatedDate
+        label: "Updated Date"
+        type: date
+        format: "yyyy-MM-dd"
+      - name: category
+        label: Category
+        type: string
+        required: true
+      - name: vehicleType
+        label: Vehicle Type
+        type: select
+        required: true
+        options:
+          values:
+            - label: Motorcycles
+              value: motorcycles
+            - label: E-Bikes
+              value: ebikes
+            - label: Jet Skis
+              value: jet-skis
+            - label: ATV/UTV
+              value: atv-utv
+            - label: Snowmobiles
+              value: snowmobiles
+            - label: General
+              value: general
+      - name: comparisonType
+        label: Comparison Type
+        type: select
+        required: true
+        options:
+          values:
+            - label: Product vs Product
+              value: product-vs-product
+            - label: Best Of
+              value: best-of
+            - label: Category Guide
+              value: category-guide
+      - name: products
+        label: Products
+        type: list
+        required: true
+        description: "Products being compared"
+        fields:
+          - name: name
+            label: "Product Name"
+            type: string
+          - name: brand
+            label: Brand
+            type: string
+          - name: rating
+            label: Rating
+            type: number
+            min: 1
+            max: 5
+          - name: price
+            label: Price
+            type: string
+          - name: pros
+            label: Pros
+            type: list
+            field:
+              type: string
+          - name: cons
+            label: Cons
+            type: list
+            field:
+              type: string
+          - name: affiliateUrl
+            label: "Affiliate URL"
+            type: string
+      - name: winner
+        label: Winner
+        type: string
+        description: "Which product wins? (optional)"
+      - name: featuredImage
+        label: "Featured Image"
+        type: image
+      - component: affiliateLinks
+      - component: seo
+

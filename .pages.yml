@@ -35,7 +35,7 @@ components:
   # Affiliate links component
   affiliateLinks:
     label: Affiliate Links
-    type: list
+    list: true
     description: "Add affiliate product links (RevZilla, Amazon, etc.)"
     fields:
       - name: partner
@@ -168,7 +168,7 @@ content:
               value: location
       - name: tags
         label: Tags
-        type: list
+        list: true
         field:
           type: string
       - name: featuredImage
@@ -272,17 +272,17 @@ content:
               value: jet-skis
       - name: pros
         label: Pros
-        type: list
+        list: true
         field:
           type: string
       - name: cons
         label: Cons
-        type: list
+        list: true
         field:
           type: string
       - name: safetyCertifications
         label: "Safety Certifications"
-        type: list
+        list: true
         field:
           type: string
       - name: featuredImage
@@ -290,7 +290,7 @@ content:
         type: image
       - name: tags
         label: Tags
-        type: list
+        list: true
         field:
           type: string
       - component: affiliateLinks
@@ -389,7 +389,7 @@ content:
         type: image
       - name: tags
         label: Tags
-        type: list
+        list: true
         field:
           type: string
       - component: seo
@@ -437,7 +437,7 @@ content:
         type: string
       - name: highlights
         label: Highlights
-        type: list
+        list: true
         field:
           type: string
       - name: mapUrl
@@ -502,7 +502,7 @@ content:
               value: snowmobiles
       - name: localDealers
         label: Local Dealers
-        type: list
+        list: true
         description: "Local dealerships and shops"
         fields:
           - name: name
@@ -524,13 +524,13 @@ content:
             max: 5
       - name: weatherConsiderations
         label: "Weather Considerations"
-        type: list
+        list: true
         required: true
         field:
           type: string
       - name: popularRoutes
         label: "Popular Routes"
-        type: list
+        list: true
         field:
           type: string
       - component: seo
@@ -568,7 +568,7 @@ content:
         description: "City, Country"
       - name: specialties
         label: Specialties
-        type: list
+        list: true
         required: true
         field:
           type: string
@@ -588,13 +588,13 @@ content:
               value: luxury
       - name: categories
         label: "Product Categories"
-        type: list
+        list: true
         required: true
         field:
           type: string
       - name: vehicleTypes
         label: Vehicle Types
-        type: list
+        list: true
         required: true
         description: "What vehicles does this brand cater to?"
         field:
@@ -691,7 +691,7 @@ content:
               value: category-guide
       - name: products
         label: Products
-        type: list
+        list: true
         required: true
         description: "Products being compared"
         fields:
@@ -711,12 +711,12 @@ content:
             type: string
           - name: pros
             label: Pros
-            type: list
+            list: true
             field:
               type: string
           - name: cons
             label: Cons
-            type: list
+            list: true
             field:
               type: string
           - name: affiliateUrl

@@ -35,6 +35,7 @@ components:
   # Affiliate links component
   affiliateLinks:
     label: Affiliate Links
+    type: object
     list: true
     description: "Add affiliate product links (RevZilla, Amazon, etc.)"
     fields:

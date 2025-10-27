@@ -17,7 +17,10 @@ export function SignIn() {
   const error = searchParams.get("error") || "";
 
   useEffect(() => {
-    if (error) toast.error(error);
+    if (error) {
+      const errorMsg = error ? String(error) : "An error occurred";
+      toast.error(errorMsg);
+    }
   }, [error]);
 
   useEffect(() => {

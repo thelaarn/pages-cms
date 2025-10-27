@@ -193,13 +193,14 @@ export function EntryEditor({
         if (onSave) onSave(response.data);
         return response.message;
       },
-      error: (error: any) => error.message,
+      error: (error: any) => error?.message ? String(error.message) : "Failed to save file",
     });
 
     try {
       await savePromise;
     } catch (error: any) {
-      console.error(error.message);
+      const errorMsg = error?.message ? String(error.message) : "Unknown error";
+      console.error(errorMsg);
     }
   };
 

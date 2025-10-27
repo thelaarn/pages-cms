@@ -90,7 +90,7 @@ export function RepoTemplates({ defaultAccount }: { defaultAccount?: any }) {
           router.push(`/${copyTemplateState.data.owner}/${copyTemplateState.data.repo}`);
           return `Repository is ready, redirecting you.`;
         },
-        error: (error: any) => error.message,
+        error: (error: any) => error?.message ? String(error.message) : "Repository setup failed",
       });
     }
   }, [copyTemplateState, router]);

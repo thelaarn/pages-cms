@@ -94,7 +94,7 @@ const EmptyCreate = ({
           router.refresh();
           return `Successfully created ${toCreate}.`;
         },
-        error: (error: any) => error.message,
+        error: (error: any) => error?.message ? String(error.message) : `Failed to create ${toCreate}`,
       });
     } catch (error) {
       console.error(error);

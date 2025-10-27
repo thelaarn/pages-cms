@@ -19,7 +19,7 @@ export default function Error({
   return (
     <Message
       title="Something's wrong"
-      description={error.message}
+      description={error?.message ? String(error.message) : "An unknown error occurred"}
       className="absolute inset-0"
     >
       <Link className={buttonVariants({ variant: "default" })} href="/">Go to home</Link>

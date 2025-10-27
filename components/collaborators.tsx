@@ -72,11 +72,14 @@ export function Collaborators({
         setCollaborators(data.data);
 
         if (data.data.errors && data.data.errors.length > 0) {
-          data.data.errors.forEach((error: any) => toast.error(error));
+          data.data.errors.forEach((error: any) => {
+            const errorMsg = error ? String(error) : "An error occurred";
+            toast.error(errorMsg);
+          });
         }
       } catch (error: any) {
         console.error(error);
-        setError(error.message);
+        setError(error?.message ? String(error.message) : "An error occurred");
       } finally {
         setIsLoading(false);
       }
@@ -98,7 +101,8 @@ export function Collaborators({
         toast.success(removed.message);
       }
     } catch(error: any) {
-      toast.error(error.message);
+      const errorMsg = error?.message ? String(error.message) : "An error occurred while removing the collaborator";
+      toast.error(errorMsg);
     } finally {
       setRemoving(removing.filter((id) => id !== collaboratorId));
     }

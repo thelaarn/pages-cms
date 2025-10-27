@@ -101,7 +101,7 @@ function MediaUploadRoot({ children, path, onUpload, media, extensions, multiple
             onUpload?.(data.data);
             return data.message;
           },
-          error: (error: any) => error.message,
+          error: (error: any) => error?.message ? String(error.message) : "Failed to upload file",
         });
       }
     } catch (error) {

@@ -97,7 +97,7 @@ export function FileOptions({
           if (onDelete) onDelete(path);
           return data.message;
         },
-        error: (error: any) => error.message,
+        error: (error: any) => error?.message ? String(error.message) : "Failed to delete file",
       });
     } catch (error) {
       console.error(error);

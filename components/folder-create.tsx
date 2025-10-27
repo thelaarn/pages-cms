@@ -71,7 +71,7 @@ const FolderCreate = ({
           if (onCreate) onCreate(response.data);
           return `Folder "${fullNewPath}" created successfully.`;
         },
-        error: (error: any) => error.message,
+        error: (error: any) => error?.message ? String(error.message) : "Failed to create folder",
       });
     } catch (error) {
       console.error(error);

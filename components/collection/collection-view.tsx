@@ -136,7 +136,10 @@ export function CollectionView({
       }
 
       if (result.data.errors?.length) {
-        result.data.errors.forEach((e: any) => toast.error(e));
+        result.data.errors.forEach((e: any) => {
+          const errorMsg = e ? String(e) : "An error occurred";
+          toast.error(errorMsg);
+        });
       }
 
       const unsortedData = result.data.contents || [];
@@ -151,9 +154,10 @@ export function CollectionView({
     } catch (err: any) {
       console.error(`Fetch failed for path ${fetchPath}:`, err);
       if (fetchPath === (path || schema.path)) {
-        setError(err.message);
+        setError(err?.message ? String(err.message) : "An error occurred");
       } else {
-        toast.error(`Could not load items inside ${getFileName(fetchPath)}: ${err.message}`);
+        const errorMsg = err?.message ? String(err.message) : "unknown error";
+        toast.error(`Could not load items inside ${getFileName(fetchPath)}: ${errorMsg}`);
       }
       return undefined;
     }
@@ -259,7 +263,7 @@ export function CollectionView({
           router.push(`/${config.owner}/${config.repo}/${encodeURIComponent(config.branch)}/collection/${encodeURIComponent(name)}/new?parent=${encodeURIComponent(getParentPath(normalizedNewPath))}`);
           return data.message;
         },
-        error: (error: any) => error.message,
+        error: (error: any) => error?.message ? String(error.message) : "Failed to create folder",
       });
     } catch (error) {
       console.error(error);

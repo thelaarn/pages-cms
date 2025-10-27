@@ -81,7 +81,7 @@ export function FileRename({
           if (onRename) onRename(path, newPath);
           return data.message;
         },
-        error: (error: any) => error.message,
+        error: (error: any) => error?.message ? String(error.message) : "Failed to rename file",
       });
     } catch (error) {
       console.error(error);

@@ -83,9 +83,10 @@ export async function GET(
     });
   } catch (error: any) {
     console.error(error);
+    const errorMessage = error?.message ? String(error.message) : "An unknown error occurred";
     return Response.json({
       status: "error",
-      message: error.status === 404 ? "Not found" : error.message,
+      message: error?.status === 404 ? "Not found" : errorMessage,
     });
   }
 }
@@ -132,7 +133,8 @@ const parseContent = (
       );
       if (schema.list) contentObject = contentObject.listWrapper;
     } catch (error: any) {
-      throw new Error(`Error parsing frontmatter: ${error.message}`);
+      const errorMsg = error?.message ? String(error.message) : "Unknown parsing error";
+      throw new Error(`Error parsing frontmatter: ${errorMsg}`);
     }
   } else {
     contentObject = { body: content };

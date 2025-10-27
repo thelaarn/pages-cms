@@ -130,9 +130,10 @@ export async function GET(
     });
   } catch (error: any) {
     console.error(error);
+    const errorMessage = error?.message ? String(error.message) : "An unknown error occurred";
     return Response.json({
       status: "error",
-      message: error.message,
+      message: errorMessage,
     });
   }
 }

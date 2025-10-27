@@ -503,6 +503,7 @@ content:
               value: snowmobiles
       - name: localDealers
         label: Local Dealers
+        type: object
         list: true
         description: "Local dealerships and shops"
         fields:
@@ -692,6 +693,7 @@ content:
               value: category-guide
       - name: products
         label: Products
+        type: object
         list: true
         required: true
         description: "Products being compared"

@@ -49,11 +49,15 @@ export function EntryEditor({
   const router = useRouter();
   
   const { config } = useConfig();
-  if (!config) throw new Error(`Configuration not found.`);
+  
+  // Handle config not ready - return loading skeleton
+  if (!config) {
+    return <div className="flex items-center justify-center min-h-screen"><Skeleton className="w-96 h-96 rounded-md" /></div>;
+  }
   
   let schema = useMemo(() => {
     if (!name) return;
-    return getSchemaByName(config?.object, name)
+    return getSchemaByName(config.object, name)
   }, [config, name]);
   
   let entryFields = useMemo(() => {

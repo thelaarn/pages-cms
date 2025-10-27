@@ -149,7 +149,11 @@ export function Collaborators({
                   <Avatar className="h-6 w-6">
                     <AvatarImage src={`https://unavatar.io/${collaborator.email}?fallback=false`} alt={`${collaborator.email}'s avatar`} />
                     <AvatarFallback className="font-medium text-muted-foreground uppercase text-xs">
-                      {collaborator.email.split('@')[0].substring(0, 2)}
+                      {(() => {
+                        const emailParts = collaborator.email.split('@');
+                        const localPart = emailParts[0] || 'U';
+                        return localPart.substring(0, 2);
+                      })()}
                     </AvatarFallback>
                   </Avatar>
                   <div className="font-medium text-left truncate">

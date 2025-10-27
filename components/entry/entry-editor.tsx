@@ -123,7 +123,7 @@ export function EntryEditor({
             setDisplayTitle(`Editing "${data.data.contentObject?.[primaryField] || getFileName(normalizePath(path))}"`);
           }
         } catch (error: any) {
-          setError(error.message);
+          setError(error?.message || String(error) || "An unknown error occurred");
         } finally {
           setIsLoading(false);
         }
@@ -147,7 +147,7 @@ export function EntryEditor({
           
           setHistory(data.data);
         } catch (error: any) {
-          console.error(error);
+          console.error("Failed to fetch entry history:", error);
         }
       }
     };
@@ -323,26 +323,26 @@ export function EntryEditor({
     // TODO: should we use a custom error class with code?
     // TODO: errors show no header (unlike collection and media). Consider standardizing templates.
     if (error === "Not found") {
-      return (
-        <Message
-            title="File missing"
-            description={`The file "${schema.path}" has not been created yet.`}
+        return (
+          <Message
+              title="File missing"
+              description={`The file "${schema.path}" has not been created yet.`}
+              className="absolute inset-0"
+            >
+            <EmptyCreate type="content" name={schema.name}>Create file</EmptyCreate>
+          </Message>
+        );
+      } else {
+        return (
+          <Message
+            title="Something's wrong"
+            description={error || "An unknown error occurred"}
             className="absolute inset-0"
-          >
-          <EmptyCreate type="content" name={schema.name}>Create file</EmptyCreate>
-        </Message>
-      );
-    } else {
-      return (
-        <Message
-          title="Something's wrong"
-          description={error}
-          className="absolute inset-0"
-          cta="Go to settings"
-          href={`/${config.owner}/${config.repo}/${encodeURIComponent(config.branch)}/settings`}
-        />
-      );
-    }
+            cta="Go to settings"
+            href={`/${config.owner}/${config.repo}/${encodeURIComponent(config.branch)}/settings`}
+          />
+        );
+      }
   }
   
   return (

@@ -193,7 +193,9 @@ const swapPrefix = (
       : `${to}/${remainingPath.replace(/^\//, '')}`;
   }
 
-  if (newPath && newPath.startsWith("/") && relative) newPath = newPath.substring(1);
+  if (newPath && typeof newPath === 'string' && newPath.startsWith("/") && relative) {
+    newPath = newPath.substring(1);
+  }
 
   return newPath;
 }

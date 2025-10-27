@@ -53,7 +53,7 @@ export function CollectionView({
   const [search, setSearch] = useState("");
   const [data, setData] = useState<Record<string, any>[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   const searchParams = useSearchParams();
   const pathname = usePathname();

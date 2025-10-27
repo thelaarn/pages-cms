@@ -17,7 +17,7 @@ export function Thumbnail({
   className?: string;
 }) {
   const [rawUrl, setRawUrl] = useState<string | null>(null);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
 
   const { owner, repo, isPrivate } = useRepo();
   
@@ -35,7 +35,7 @@ export function Thumbnail({
         } catch (error: any) {
           const errorMessage = error instanceof Error ? error.message : 'Unknown error';
           console.warn(errorMessage);
-          setError(error.message);
+          setError(error?.message ? String(error.message) : 'Unknown error');
         }
       }
     };

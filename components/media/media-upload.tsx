@@ -99,7 +99,7 @@ function MediaUploadRoot({ children, path, onUpload, media, extensions, multiple
           loading: `Uploading ${file.name}`,
           success: (data: any) => {
             onUpload?.(data.data);
-            return data.message;
+            return data?.message ? String(data.message) : "File uploaded successfully";
           },
           error: (error: any) => error?.message ? String(error.message) : "Failed to upload file",
         });

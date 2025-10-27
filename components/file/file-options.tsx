@@ -95,7 +95,7 @@ export function FileOptions({
         loading: `Deleting ${path}`,
         success: (data: any) => {
           if (onDelete) onDelete(path);
-          return data.message;
+          return data?.message ? String(data.message) : "File deleted successfully";
         },
         error: (error: any) => error?.message ? String(error.message) : "Failed to delete file",
       });

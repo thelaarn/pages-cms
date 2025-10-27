@@ -114,7 +114,8 @@ const handleSignInWithToken = async (token: string, redirectTo?: string) => {
   try {
     ({ tokenHash, emailLoginToken } = await getTokenData(token));
   } catch (error: any) {
-    return redirect(`/sign-in?error=${encodeURIComponent(error.message)}`);
+    const errorMsg = error?.message ? String(error.message) : "Authentication error";
+    return redirect(`/sign-in?error=${encodeURIComponent(errorMsg)}`);
   }
 
   // Consume invite token

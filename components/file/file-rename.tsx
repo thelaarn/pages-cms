@@ -79,7 +79,7 @@ export function FileRename({
         loading: `Renaming "${path}" to "${newPath}"`,
         success: (data: any) => {
           if (onRename) onRename(path, newPath);
-          return data.message;
+          return data?.message ? String(data.message) : "File renamed successfully";
         },
         error: (error: any) => error?.message ? String(error.message) : "Failed to rename file",
       });

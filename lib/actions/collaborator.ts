@@ -99,7 +99,7 @@ const handleAddCollaborator = async (prevState: any, formData: FormData) => {
 		};
 	} catch (error: any) {
 		console.error(error);
-		return { error: error.message };
+		return { error: error?.message ? String(error.message) : "An error occurred" };
 	}
 };
 
@@ -133,7 +133,7 @@ const handleRemoveCollaborator = async (collaboratorId: number, owner: string, r
 		return { message: `Invitation to ${collaborator.email} for "${owner}/${repo}" successfully removed.` };
 	} catch (error: any) {
 		console.error(error);
-		return { error: error.message };
+		return { error: error?.message ? String(error.message) : "An error occurred" };
 	}
 };
 

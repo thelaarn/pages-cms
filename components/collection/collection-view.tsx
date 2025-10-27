@@ -261,7 +261,7 @@ export function CollectionView({
         loading: `Renaming "${path}" to "${newPath}"`,
         success: (data: any) => {
           router.push(`/${config.owner}/${config.repo}/${encodeURIComponent(config.branch)}/collection/${encodeURIComponent(name)}/new?parent=${encodeURIComponent(getParentPath(normalizedNewPath))}`);
-          return data.message;
+          return data?.message ? String(data.message) : "Folder created successfully";
         },
         error: (error: any) => error?.message ? String(error.message) : "Failed to create folder",
       });

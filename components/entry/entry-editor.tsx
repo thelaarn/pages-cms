@@ -175,7 +175,7 @@ export function EntryEditor({
         if (!response.ok) throw new Error(`Failed to save file: ${response.status} ${response.statusText}`);
         const data: any = await response.json();
       
-        if (data.status !== "success") throw new Error(data.message);
+        if (data.status !== "success") throw new Error(data?.message ? String(data.message) : "Failed to save file");
         
         if (data.data.sha !== sha) setSha(data.data.sha);
 
@@ -191,7 +191,7 @@ export function EntryEditor({
       loading: "Saving your file",
       success: (response: any) => {
         if (onSave) onSave(response.data);
-        return response.message;
+        return response?.message ? String(response.message) : "File saved successfully";
       },
       error: (error: any) => error?.message ? String(error.message) : "Failed to save file",
     });

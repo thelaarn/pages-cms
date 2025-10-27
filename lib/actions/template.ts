@@ -56,7 +56,7 @@ const handleCopyTemplate = async (prevState: any, formData: FormData) => {
     };
 	} catch (error: any) {
 		console.error(error);
-		return { error: error.response?.data?.message || error.message };
+		return { error: error.response?.data?.message || error?.message ? String(error.message) : "An error occurred" };
 	}
 };
 

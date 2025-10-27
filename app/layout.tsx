@@ -27,8 +27,43 @@ export default async function RootLayout({
           inter.className
         )}
       >
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              // Global error handler - catches all runtime errors
+              window.addEventListener('error', function(event) {
+                console.error('🔴 GLOBAL ERROR CAUGHT:', {
+                  message: event.message,
+                  filename: event.filename,
+                  lineno: event.lineno,
+                  colno: event.colno,
+                  error: event.error,
+                  stack: event.error?.stack
+                });
+              });
+              
+              // Catch unhandled promise rejections
+              window.addEventListener('unhandledrejection', function(event) {
+                console.error('🔴 UNHANDLED PROMISE REJECTION:', {
+                  reason: event.reason,
+                  promise: event.promise
+                });
+              });
+            `,
+          }}
+        />
         {children}
         <Toaster/>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              // Initialize error logger
+              if (typeof window !== 'undefined') {
+                window.__errorLoggerReady = true;
+              }
+            `,
+          }}
+        />
       </body>
     </html>
   );

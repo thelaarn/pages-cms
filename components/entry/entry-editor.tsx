@@ -160,6 +160,8 @@ export function EntryEditor({
   }, [config, name, path, sha, refetchTrigger]);
 
   const onSubmit = async (contentObject: any) => {
+    if (!config) return; // Guard against null config
+    
     const savePromise = new Promise(async (resolve, reject) => {
       try {
         const savePath = path ?? `${parent ?? schema.path}/${generateFilename(schema.filename, schema, contentObject)}`;
@@ -209,6 +211,7 @@ export function EntryEditor({
   };
 
   const handleDelete = (path: string) => {
+    if (!config || !schema) return; // Guard against null config/schema
     // TODO: disable save button or freeze form while deleting?
     if (schema.type === "collection") {
       router.push(`/${config.owner}/${config.repo}/${encodeURIComponent(config.branch)}/collection/${encodeURIComponent(name)}`);
@@ -218,6 +221,7 @@ export function EntryEditor({
   };
 
   const handleRename = (oldPath: string, newPath: string) => {
+    if (!config) return; // Guard against null config
     setPath(newPath);
     router.replace(`/${config.owner}/${config.repo}/${encodeURIComponent(config.branch)}/collection/${encodeURIComponent(name)}/edit/${encodeURIComponent(newPath)}`);
   };
@@ -331,7 +335,7 @@ export function EntryEditor({
   if (error) {
     // TODO: should we use a custom error class with code?
     // TODO: errors show no header (unlike collection and media). Consider standardizing templates.
-    if (error === "Not found") {
+    if (error === "Not found" && schema) {
         return (
           <Message
               title="File missing"
@@ -375,7 +379,7 @@ export function EntryEditor({
         //     />
         //   : undefined
         // }
-        options={path && sha &&
+        options={path && sha && schema &&
           <FileOptions
             path={path}
             sha={sha}

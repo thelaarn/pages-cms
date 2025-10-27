@@ -27,7 +27,7 @@ export class ErrorBoundary extends Component<Props, State> {
     errorLogger.logError({
       message: error?.message ? String(error.message) : 'React Error Boundary caught an error',
       stack: error?.stack,
-      componentStack: errorInfo.componentStack,
+      componentStack: errorInfo.componentStack || null,
       timestamp: new Date().toISOString(),
       url: typeof window !== 'undefined' ? window.location.href : '',
       userAgent: typeof window !== 'undefined' ? navigator.userAgent : '',

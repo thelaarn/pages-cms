@@ -5,7 +5,7 @@
 export interface ErrorLog {
   message: string;
   stack?: string;
-  componentStack?: string;
+  componentStack?: string | null;
   timestamp: string;
   url: string;
   userAgent: string;

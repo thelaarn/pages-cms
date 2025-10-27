@@ -613,6 +613,13 @@ const EntryForm = ({
   ): React.ReactNode[] => {
     return fields.map((field) => {
       if (!field || field.hidden) return null;
+      
+      // CRITICAL: Skip fields without a name - this causes substring errors
+      if (!field.name) {
+        console.warn('Skipping field without name:', field);
+        return null;
+      }
+      
       const currentFieldName = parentName ? `${parentName}.${field.name}` : field.name;
 
       if (field.list === true || (typeof field.list === 'object' && field.list !== null)) {

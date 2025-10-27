@@ -4,7 +4,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { UserProvider } from "@/contexts/user-context";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ErrorBoundary } from "@/components/error-boundary";
-import { DebugPanel } from "@/components/debug-panel";
+import { EnhancedDebugPanel } from "@/components/debug-panel-enhanced";
 import { ErrorLoggerScript } from "@/app/error-logger-script";
 import { User } from "@/types/user";
 

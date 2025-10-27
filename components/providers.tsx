@@ -21,7 +21,7 @@ export function Providers({ children, user }: { children: React.ReactNode, user:
         <UserProvider user={user}>
           <TooltipProvider>
             {children}
-            <DebugPanel />
+            <EnhancedDebugPanel />
           </TooltipProvider>
         </UserProvider>
       </ThemeProvider>

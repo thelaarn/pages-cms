@@ -19,15 +19,19 @@ export default function Page({
   }
 }) {
   const { config } = useConfig();
+
+  // Call useMemo unconditionally (hooks rule)
+  const schema = useMemo(() => {
+    if (!config) return null;
+    return getSchemaByName(config.object, decodeURIComponent(params.name));
+  }, [config, params.name]);
   
-  // Handle loading state instead of throwing
+  // Handle loading state - render after all hooks
   if (!config) {
     return <Loader />;
   }
-
-  const schema = useMemo(() => getSchemaByName(config.object, decodeURIComponent(params.name)), [config, params.name]);
   
-  // Handle missing schema with error UI instead of throwing
+  // Handle missing schema with error UI
   if (!schema) {
     return (
       <Message

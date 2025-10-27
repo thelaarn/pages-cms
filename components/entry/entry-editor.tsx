@@ -50,14 +50,10 @@ export function EntryEditor({
   
   const { config } = useConfig();
   
-  // Handle config not ready - return loading skeleton
-  if (!config) {
-    return <div className="flex items-center justify-center min-h-screen"><Skeleton className="w-96 h-96 rounded-md" /></div>;
-  }
-  
+  // ALL HOOKS MUST BE CALLED UNCONDITIONALLY (React Rules of Hooks)
   let schema = useMemo(() => {
-    if (!name) return;
-    return getSchemaByName(config.object, name)
+    if (!name || !config) return;
+    return getSchemaByName(config?.object, name)
   }, [config, name]);
   
   let entryFields = useMemo(() => {
@@ -98,14 +94,16 @@ export function EntryEditor({
   }, [schema, entry, path]);
 
   const navigateBack = useMemo(() => {
+    if (!config || !schema) return "";
     const parentPath = path ? getParentPath(path) : undefined;
     return schema && schema.type === "collection"
       ? `/${config.owner}/${config.repo}/${encodeURIComponent(config.branch)}/collection/${schema.name}${parentPath && parentPath !== schema.path ? `?path=${encodeURIComponent(parentPath)}` : ""}`
-      : ""},
-    [schema, config.owner, config.repo, config.branch, path]
-  );
+      : "";
+  }, [schema, config, path]);
 
   useEffect(() => {
+    if (!config) return;
+    
     const fetchEntry = async () => {
       if (path) {
         setIsLoading(true);
@@ -135,9 +133,11 @@ export function EntryEditor({
     };
 
     fetchEntry();
-  }, [config.branch, config.owner, config.repo, name, path, refetchTrigger, initialPath, schema]);
+  }, [config, name, path, refetchTrigger, initialPath, schema]);
   
   useEffect(() => {
+    if (!config) return;
+    
     // TODO: add loading for history ?
     const fetchHistory = async () => {
       if (path) {
@@ -157,7 +157,7 @@ export function EntryEditor({
     };
 
     fetchHistory();
-  }, [config.branch, config.owner, config.repo, path, sha, refetchTrigger, name]);
+  }, [config, name, path, sha, refetchTrigger]);
 
   const onSubmit = async (contentObject: any) => {
     const savePromise = new Promise(async (resolve, reject) => {
@@ -323,6 +323,10 @@ export function EntryEditor({
     </div>
   ), [displayTitle, navigateBack, path]);
 
+  // Handle config not ready - return loading skeleton AFTER all hooks are called
+  if (!config) {
+    return <div className="flex items-center justify-center min-h-screen"><Skeleton className="w-96 h-96 rounded-md" /></div>;
+  }
   
   if (error) {
     // TODO: should we use a custom error class with code?
